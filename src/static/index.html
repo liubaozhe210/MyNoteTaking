@@ -480,6 +480,7 @@
                 document.getElementById('emptyState').style.display = 'none';
                 document.getElementById('editorForm').style.display = 'block';
                 document.getElementById('editorActions').style.display = 'flex';
+                document.getElementById('deleteBtn').style.display = this.currentNote && this.currentNote.id ? 'inline-block' : 'none';
             }
 
             hideEditor() {
@@ -530,6 +531,7 @@
 
                     const savedNote = await response.json();
                     this.currentNote = savedNote;
+                    document.getElementById('deleteBtn').style.display = 'inline-block';
                     
                     // Update notes list
                     const existingIndex = this.notes.findIndex(n => n.id === savedNote.id);
