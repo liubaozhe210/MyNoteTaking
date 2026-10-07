@@ -345,7 +345,7 @@
                     <h2 class="editor-title" id="editorTitle">Select a note to edit</h2>
                     <div class="editor-actions" id="editorActions" style="display: none;">
                         <button class="btn btn-save" id="saveBtn">💾 Save</button>
-                        <button class="btn btn-delete" id="deleteBtn">🗑️ Delete</button>
+                        <button class="btn btn-delete" id="deleteBtn" hidden>🗑️ Delete</button>
                     </div>
                 </div>
 
@@ -480,7 +480,11 @@
                 document.getElementById('emptyState').style.display = 'none';
                 document.getElementById('editorForm').style.display = 'block';
                 document.getElementById('editorActions').style.display = 'flex';
-                document.getElementById('deleteBtn').style.display = this.currentNote && this.currentNote.id ? 'inline-block' : 'none';
+                this.updateDeleteButtonVisibility();
+            }
+
+            updateDeleteButtonVisibility() {
+                document.getElementById('deleteBtn').hidden = !this.currentNote || this.currentNote.id == null;
             }
 
             hideEditor() {
@@ -531,7 +535,7 @@
 
                     const savedNote = await response.json();
                     this.currentNote = savedNote;
-                    document.getElementById('deleteBtn').style.display = 'inline-block';
+                    this.updateDeleteButtonVisibility();
                     
                     // Update notes list
                     const existingIndex = this.notes.findIndex(n => n.id === savedNote.id);
@@ -639,4 +643,3 @@
     </script>
 </body>
 </html>
-
